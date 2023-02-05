@@ -110,12 +110,16 @@ To implement relative positional encodings, one has to introduce the pairwise re
 a_ij^V  , a_ij^K are edge information which represent the absolute distance between elements modified by learned weight parameters.
 To append relative positional information a_ij^V at the Value level Equation 3 is modified to:
 
-z_i= ∑_(j=1)^n▒〖〖a_ij (x〗_j W_V  + a_ij^V)〗  	 (EQ7)
+$$ z_i=\ \sum_{j=1}^{n}{{a_{ij}(x}_jW_V\ +\ a_{ij}^V)} $$
+
+(EQ7)
 
 
 And for the Key matrix the pairwise relationships a_ij^K  is added to Equation 5:
 
-e_ij=((x_i W_Q) 〖(x_j W_K  + a_ij^K)〗^T)/√d	  (EQ8)
+$$ e_{ij}=\frac{(x_iW_Q)\ {(x_jW_K\ +\ a_{ij}^K)}^T}{\sqrt d} $$
+
+(EQ8)
 
 Therefore, in contrast to absolute positional encodings, the attention mechanism requires alteration and is repeatedly calculated in every layer. A resulting drawback is the memory complexity of O(L²). But the relative position encoding by (Shaw, Uszkoreit and Vaswani, 2018) was recently subject to more research and several improvements also in regard to efficiency were proposed (Huang et al., 2018, 2020; Chen, 2021; Luo et al., 2021). 
 But for this experiment the original relative positional encoding will be used. A nice implementation can be found here by Yining Hong  ( https://github.com/evelinehong/Transformer_Relative_Position_PyTorch/blob/master/relative_position.py ). She follows Shaws et al. proposition of an efficient implementation by splitting EQ8 into two terms.
