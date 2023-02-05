@@ -24,6 +24,8 @@ One of the main reasons in the original transformer, beside directly handling di
 A position encoding, first introduced in (Gehring et al., 2017), provides positional information. The position is mapped to a vector of continuous numbers and is added to each element of the input sequence of the encoder and decoder before being processed by the attention mechanism. 
 
 ![Absolute and Relative position biases](../assets/images/abs_vs_rel.png)
+
+
 Figure 3: Absolute and Relative position biases which in this example encode the position for a sequence of length three. z_i represents the ith element of the sequence as Query or Key and their dot-product defines the attention score a_ij . The Position Biases are added to each element z before the matrix multiplication is calculated and therefore affect the attention score. 
 For the Absolute Position Bias, to each element their position in a sequence is added, therefore for example the attention score a_11 of the first element with itself includes the same position encoding twice, once in the Query and once in the Value representation.  
 In contrast, the Relative Position Bias encodes the relationships directly and includes the distance to other elements. Therefore, for example r_0 stays the same for each element’s attention score with itself. 
