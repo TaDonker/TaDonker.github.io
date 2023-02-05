@@ -7,7 +7,7 @@ categories: media
 
 Transformers for time series forecasting: How do different positional encodings effect the performance
 
-![Comparison](/../assets/PE_comp.png)
+![Comparison](../assets/PE_comp.png)
 
 
 In this article different positional encodings for a time series forecast will be compared. Two absolute positional encodings and a relative positional encoding will be explained and the effect on forecasting accuracy measured. Also, the combination of different encodings with an embedding of time features (temporal embedding) will be analysed.
