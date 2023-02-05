@@ -32,10 +32,10 @@ A common solution for an absolute position encoding is a learned embedding. The 
 
 An implementation with PyTorch is rather simple by using the built in Embedding class (https://pytorch.org/docs/stable/generated/torch.nn.Embedding.html)
 The required hyperparameters are the sequence length, for time series also called window size, and the output dimension of each learned embedding vector, which regulates the expressiveness.
-CODE:
-class TransformerModel(nn.Module):
 
-…
+{% highlight ruby %} class TransformerModel(nn.Module):
+####
+####
     self.position_embed = nn.Embedding(window_len, n_embd)
 
     def forward(self, x):
@@ -48,7 +48,7 @@ class TransformerModel(nn.Module):
         for block in self.layers: 
 #a transformer consists of consecutive attention layers 
             x = block(x)
-        return x
+        return x {% endhighlight %}
 
 
 
