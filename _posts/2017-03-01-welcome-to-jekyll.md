@@ -1,6 +1,6 @@
 ---
 title: "Positional Encodings for Time Series"
-usemathjax: true
+mathjax: true
 layout: post
 categories: media
 ---
