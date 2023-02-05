@@ -64,7 +64,7 @@ The other popular and used in the final version of the original transformer by V
 
  $$ \frac{p} { {10000}^\frac{2j}{d} } $$
  
-$$ sin{\frac{p}{{10000}^\frac{2j}{d}}}  $$
+$$ sin{\frac{p}{10000^\frac{2j}{d}}}  $$
 
  (EQ6)a
  
