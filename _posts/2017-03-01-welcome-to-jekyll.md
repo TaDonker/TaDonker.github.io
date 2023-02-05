@@ -62,8 +62,10 @@ The other popular and used in the final version of the original transformer by V
 
 $$ {PE}_{\left(p,2j\right)}=sin{\ \left(\ \frac{p}{10000^\frac{2j}{d}}\right)} $$
 
+
  
-$$ sin{\frac{p}{10000^\frac{2j}{d}}}  $$
+$$ {PE}_{(p,2j+1)}=cos{\left(\ \frac{p}{10000^\frac{2j}{d}}\right)}  $$
+
 
  (EQ6)a
  
