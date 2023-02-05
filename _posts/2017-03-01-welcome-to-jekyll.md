@@ -59,7 +59,7 @@ The required hyperparameters are the sequence length, for time series also calle
 
 The other popular and used in the final version of the original transformer by Vaswani et al. is the sinusoidal encoding (Equation 6). Like in the learned embedding, the sinusoidal function takes the position index p of each element of a sequence as input, but here the function is predefined without learnable parameters. It produces d waves of different frequencies alternating between sine and cosine. 
 
-    
+ $$ {PE}_{\left(p,2j\right)}=sin{\ \left(\ \frac{p}{{10000}^\frac{2j}{d}}\right)} $$  
 
  (EQ6)a
  
