@@ -7,6 +7,9 @@ categories: media
 
 Transformers for time series forecasting: How do different positional encodings effect the performance
 
+![title](/assets/PE_comp.png))
+
+
 In this article different positional encodings for a time series forecast will be compared. Two absolute positional encodings and a relative positional encoding will be explained and the effect on forecasting accuracy measured. Also, the combination of different encodings with an embedding of time features (temporal embedding) will be analysed.
 The experiments are conducted on a traffic dataset, which shows periodic patterns, and the transformer model proposed by  (Li et al., 2020) in “ Enhancing the Locality and Breaking the Memory Bottleneck of Transformer on Time Series Forecasting ” is used. More details can be found in my bachelor thesis (LINK=======)
  
