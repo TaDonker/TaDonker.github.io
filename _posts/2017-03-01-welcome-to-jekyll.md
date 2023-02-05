@@ -1,6 +1,7 @@
 ---
 title: "Positional Encodings for Time Series"
 layout: post
+mathjax: true
 ---
 
 Transformers for time series forecasting: How do different positional encodings effect the performance
