@@ -118,6 +118,7 @@ $$ z_i=\ \sum_{j=1}^{n}{a_{ij}(x_jW_V\ +\ a_{ij}^V)} $$
 And for the Key matrix the pairwise relationships a_ij^K  is added to Equation 5:
 
 
+$$ e_{ij}=\frac{(x_iW_Q)\ {(x_jW_K\ +\ a_{ij}^K)}^T}{\sqrt d} $$
 
 (EQ8)
 
