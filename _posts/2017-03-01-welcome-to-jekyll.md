@@ -64,6 +64,8 @@ The other popular and used in the final version of the original transformer by V
 Figure 4: The absolute sinusoidal position encoding uses alternating values of sine and cosine. The wavelength is increasing with higher dimensions of the encoding and therefore avoids identical encodings for different positions even for long sequences. 
 To implement the sinusoidal encoding the 
 http://nlp.seas.harvard.edu/2018/04/03/attention.html
+
+{% highlight ruby %}
 class PositionalEmbedding(nn.Module):
     def __init__(self, d_model, max_len=5000):
         super(PositionalEmbedding, self).__init__()
@@ -84,7 +86,7 @@ class PositionalEmbedding(nn.Module):
         return self.pe[:, :x.size(1)]
 
 self.po_embed = embed.PositionalEmbedding(self.emb_num)
-
+{% endhighlight %}
 
 Both absolute encodings were tested in the original transformer and nearly identical results were observed. The sinusoidal version was chosen because it may allow the model to extrapolate to sequence lengths longer than the ones encountered during training. For time series forecasting this advantage of the sinusoidal encoding is less critical because in contrast to varying sentence length the forecast horizon can be arbitrarily stipulated beforehand.
 Therefore, it is not clear which positional encoding should be used and it could even be possible that completely data dependent positional encodings are favourable for time series. Nevertheless, very little research has been done to explore the effects of different positional encodings for time series forecasting.  
