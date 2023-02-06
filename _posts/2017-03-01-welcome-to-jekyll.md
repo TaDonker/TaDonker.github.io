@@ -15,7 +15,9 @@ The experiments are conducted on a traffic dataset, which shows periodic pattern
 [Bachelor Thesis](../assets/docs/Thesis_TarekDonker.pdf)
  
 >Results upfront:
->Using temporal embeddings resulted in a slight performance improvement on a traffic dataset. A relative positional >encoding achieved the best results. Also, the results showed, that it is possible to omit traditional positional >encodings and only use temporal embeddings.
+>Using temporal embeddings resulted in a slight performance improvement on a traffic dataset. A relative positional 
+>encoding achieved the best results. Also, the results showed, that it is possible to omit traditional positional 
+>encodings and only use temporal embeddings.
 
 Transformers for time series forecasting are rising in research interest and achieve state-of-the-art results on many benchmarks. But while the supplementary research of transformers for Natural Language Processing is already built up, for time series forecasting it lacks behind.
 The positional encoding is an essential component of any transformer and is heavily researched for language tasks. Nevertheless, for time series forecasting with transformers comparative studies on positional encodings are scarce and the existing research is contradictory to used methods in recent models. 
@@ -58,7 +60,8 @@ The required hyperparameters are the sequence length, for time series also calle
         x = torch.cat((x, position_info), dim=2)
 
         for block in self.layers: 
-        # a transformer consists of consecutive (attention) layers, one could add position information repeatedly,
+        # a transformer consists of consecutive (attention) layers, 
+        # one could add position information repeatedly,
         # which might be beneficial for very deep models 
             x = block(x)
         return x {% endhighlight %}
