@@ -35,7 +35,7 @@ In contrast, the Relative Position Bias encodes the relationships directly and i
 The NLP research on positional information is mostly grouped in either absolute or relative encodings. The encodings of the original transformer are absolute and encode each position p from 1 to maximum sequence length into a d-dimensional vector. Hence, a mapping  $$f∶ N → R^d $$  is defined. In the original transformer paper by Vaswani et al. two different absolute encodings are investigated, an engineered fixed encoding with sinusoidal waves and one where the encoding is learned completely by the model itself. 
 
 ### Absolute Positional Encodings
-####Learned Embedding
+#### Learned Embedding
 
 A common solution for an absolute position encoding is a learned embedding. The position of each element within the input sequence is modelled with a learned lookup table and produces the d-dimensional output. An advantage is that the resulting positional encoding is completely data-driven and is possibly able to learn more complex information rather than only about position, which could be especially useful for time series, if temporal information can be incorporated.
 
@@ -117,9 +117,9 @@ Therefore, it is not clear which positional encoding should be used and it could
 ### Relative Positional Encodings
 
 The absolute encodings are independent of each other and the main goal is to distinguish different positions, while the relationships are not modelled (Wang et al., 2020). 
-On the other hand, relative positional encodings (Shaw, Uszkoreit and Vaswani, 2018) encode the relative distance between tokens and represent the pairwise relationships between the current position and other positions.
-(Shaw, Uszkoreit and Vaswani, 2018)  propose to incorporate relative positional information parameters on the Key as well as the Value level of the self-attention mechanism.
-To implement relative positional encodings, one has to introduce the pairwise relationships a_ij^V  , a_ij^K   ∈ R^d   between input elements x_i and x_(j ). 
+On the other hand, relative positional encodings [(Shaw, Uszkoreit and Vaswani, 2018)](https://arxiv.org/abs/1803.02155) encode the relative distance between tokens and represent the pairwise relationships between the current position and other positions.
+Shaw et al. propose to incorporate relative positional information parameters on the Key as well as the Value level of the self-attention mechanism.
+To implement relative positional encodings, one has to introduce the pairwise relationships $$a_{ij}^V  , a_{ij}^K   ∈ R^d $$  between input elements $$x_i$$ and $$x_j$$ . 
 a_ij^V  , a_ij^K are edge information which represent the absolute distance between elements modified by learned weight parameters.
 To append relative positional information a_ij^V at the Value level Equation 3 is modified to:
 
