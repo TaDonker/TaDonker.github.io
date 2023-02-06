@@ -162,5 +162,5 @@ The best performing median results are for the relative encoding and the positio
 The relative positional encoding produced the best results and seems promising for future research on time series forecasting. Because the relative embedding parameters are learned autonomously according to the characteristics of the data, it is suitable for time series. Relative positional encodings are based on the distance of the datapoints, but the importance can still be learned. This harmonizes well with time series forecasting with seasonalities, because there, the distance between periodicities is constant and the importance for such distant points is high. Admittedly, the additional improvement to temporal embeddings is only minimal and more experiments are needed.   
 In Conclusion, encoding time features into temporal embeddings seems to have the largest effect. Still, relative positional encodings, which are not very well researched for time series forecasting, performed slightly better than all other positional encodings.
 But the effect on forecasting accuracy is rather small and other model parameter like the loss function or data preparation had a larger impact on performance.
-(For more details read my Bachelor thesis:::::::::::::::::::::::::::) 
+(For more details read my [Bachelor Thesis](../assets/docs/Thesis_TarekDonker.pdf)) 
 
