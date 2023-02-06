@@ -36,7 +36,7 @@ Absolute Positional Encodings
 
 A common solution for an absolute position encoding is a learned embedding. The position of each element within the input sequence is modelled with a learned lookup table and produces the d-dimensional output. An advantage is that the resulting positional encoding is completely data-driven and is possibly able to learn more complex information rather than only about position (Wang and Chen, 2020), which could be especially useful for time series, if temporal information can be incorporated.
 
-An implementation with PyTorch is rather simple by using the built in Embedding class (https://pytorch.org/docs/stable/generated/torch.nn.Embedding.html)
+An implementation with PyTorch is rather simple by using the built in [Embedding class](https://pytorch.org/docs/stable/generated/torch.nn.Embedding.html)
 The required hyperparameters are the sequence length, for time series also called window size, and the output dimension of each learned embedding vector, which regulates the expressiveness.
 
 {% highlight ruby %} class TransformerModel(nn.Module):
@@ -127,7 +127,7 @@ $$ e_{ij}=\frac{(x_iW_Q)\ {(x_jW_K\ +\ a_{ij}^K)}^T}{\sqrt d} $$
 (EQ8)
 
 Therefore, in contrast to absolute positional encodings, the attention mechanism requires alteration and is repeatedly calculated in every layer. A resulting drawback is the memory complexity of O(L²). But the relative position encoding by (Shaw, Uszkoreit and Vaswani, 2018) was recently subject to more research and several improvements also in regard to efficiency were proposed (Huang et al., 2018, 2020; Chen, 2021; Luo et al., 2021). 
-But for this experiment the original relative positional encoding will be used. A nice implementation can be found here by Yining Hong  ( https://github.com/evelinehong/Transformer_Relative_Position_PyTorch/blob/master/relative_position.py ). She follows Shaws et al. proposition of an efficient implementation by splitting EQ8 into two terms.
+But for this experiment the original relative positional encoding will be used. A nice implementation can be found [here](https://github.com/evelinehong/Transformer_Relative_Position_PyTorch/blob/master/relative_position.py) by Yining Hong  . She follows Shaws et al. proposition of an efficient implementation by splitting EQ8 into two terms.
 
 
 
