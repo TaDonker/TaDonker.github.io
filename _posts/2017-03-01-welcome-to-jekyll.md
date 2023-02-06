@@ -30,40 +30,45 @@ A position encoding provides positional information. The position is mapped to a
 ![Absolute and Relative position biases](../assets/images/abs_vs_rel.png)
 
 The foregoing figure shows absolute and relative position biases which in this example encode the position for a sequence of length three. $$ z_i $$ represents the ith element of the sequence as Query or Key and their dot-product defines the attention score $$a_{ij}$$ . The Position Biases are added to each element $$z$$ before the matrix multiplication is calculated and therefore affect the attention score. 
-For the Absolute Position Bias, to each element their position in a sequence is added, therefore for example the attention score $$a_11$$ of the first element with itself includes the same position encoding twice, once in the Query and once in the Value representation.  
-In contrast, the Relative Position Bias encodes the relationships directly and includes the distance to other elements. Therefore, for example r_0 stays the same for each element’s attention score with itself. 
+For the Absolute Position Bias, to each element their position in a sequence is added, therefore for example the attention score $$a_{11}$$ of the first element with itself includes the same position encoding twice, once in the Query and once in the Value representation.  
+In contrast, the Relative Position Bias encodes the relationships directly and includes the distance to other elements. Therefore, for example $$r_0$$ stays the same for each element’s attention score with itself. 
 The NLP research on positional information is mostly grouped in either absolute or relative encodings. The encodings of the original transformer are absolute and encode each position p from 1 to maximum sequence length into a d-dimensional vector. Hence, a mapping  $$f∶ N → R^d $$  is defined. In the original transformer paper by Vaswani et al. two different absolute encodings are investigated, an engineered fixed encoding with sinusoidal waves and one where the encoding is learned completely by the model itself. 
 
 ### Absolute Positional Encodings
+####Learned Embedding
 
-A common solution for an absolute position encoding is a learned embedding. The position of each element within the input sequence is modelled with a learned lookup table and produces the d-dimensional output. An advantage is that the resulting positional encoding is completely data-driven and is possibly able to learn more complex information rather than only about position (Wang and Chen, 2020), which could be especially useful for time series, if temporal information can be incorporated.
+A common solution for an absolute position encoding is a learned embedding. The position of each element within the input sequence is modelled with a learned lookup table and produces the d-dimensional output. An advantage is that the resulting positional encoding is completely data-driven and is possibly able to learn more complex information rather than only about position, which could be especially useful for time series, if temporal information can be incorporated.
 
 An implementation with PyTorch is rather simple by using the built in [Embedding class](https://pytorch.org/docs/stable/generated/torch.nn.Embedding.html).
 The required hyperparameters are the sequence length, for time series also called window size, and the output dimension of each learned embedding vector, which regulates the expressiveness.
 
 {% highlight ruby %} class TransformerModel(nn.Module):
-####
-####
-    self.position_embed = nn.Embedding(window_len, n_embd)
+"incomplete Transformer class to show how position information is processed" 
+    def __init__(self, args, n_embd, win_len):
+        super(TransformerModel, self).__init__()
+        
+        self.position_embed = nn.Embedding(window_len, n_embd)
 
     def forward(self, x):
         length = x.size(1) # (Batch_size, sequence_length, num of features)
         positions = torch.tensor(torch.arange(length))
-        pos_embedding = self.position_embed(positions)
+        position_info = self.position_embed(positions)
 
-        x = torch.cat((x, pos_embedding), dim=2)
+        # position information is concatenated to each timestep, like a feature
+        x = torch.cat((x, position_info), dim=2)
 
         for block in self.layers: 
-#a transformer consists of consecutive attention layers 
+        # a transformer consists of consecutive (attention) layers, one could add position information repeatedly,
+        # which might be beneficial for very deep models 
             x = block(x)
         return x {% endhighlight %}
 
 
 
 
+### Sinusoidal Encoding
 
-
-The other popular and used in the final version of the original transformer by Vaswani et al. is the sinusoidal encoding (Equation 6). Like in the learned embedding, the sinusoidal function takes the position index p of each element of a sequence as input, but here the function is predefined without learnable parameters. It produces d waves of different frequencies alternating between sine and cosine. 
+The other popular and used in the final version of the original transformer by Vaswani et al. is the sinusoidal encoding. Like in the learned embedding, the sinusoidal function takes the position index p of each element of a sequence as input, but here, the function is predefined without learnable parameters. It produces d waves of different frequencies alternating between sine and cosine. 
 
 
 $$ {PE}_{\left(p,2j\right)}=sin{\ \left(\ \frac{p}{10000^\frac{2j}{d}}\right)} $$
@@ -73,18 +78,20 @@ $$ {PE}_{\left(p,2j\right)}=sin{\ \left(\ \frac{p}{10000^\frac{2j}{d}}\right)} $
 $$ {PE}_{(p,2j+1)}=cos{\left(\ \frac{p}{10000^\frac{2j}{d}}\right)}  $$
 
 
- (EQ6)a
+
  
 ![Sinusoidal PE](../assets/images/SinPE.png)
  
-Figure 4: The absolute sinusoidal position encoding uses alternating values of sine and cosine. The wavelength is increasing with higher dimensions of the encoding and therefore avoids identical encodings for different positions even for long sequences. 
-To implement the sinusoidal encoding the 
-http://nlp.seas.harvard.edu/2018/04/03/attention.html
+The wavelength is increasing with higher dimensions of the encoding and therefore avoids identical encodings for different positions even for long sequences. 
+To implement the sinusoidal encoding I followed the popular [Annotated Transformer](http://nlp.seas.harvard.edu/2018/04/03/attention.html) .
 
 {% highlight ruby %}
 class PositionalEmbedding(nn.Module):
+    "Implement the PE function."
+
     def __init__(self, d_model, max_len=5000):
         super(PositionalEmbedding, self).__init__()
+        
         # Compute the positional encodings once in log space.
         pe = torch.zeros(max_len, d_model).float()
         pe.require_grad = False
