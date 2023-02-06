@@ -24,13 +24,15 @@ Therefore, the effects on performance of two commonly used absolute positional e
 One of the main reasons to replace recurrent structures with self-attention in a transformer, beside directly handling distant dependencies, is to be able to parallelize computation. Recurrent neural networks are inherently sequential, which impedes parallelization and becomes more critical for longer sequences. In contrast, self-attention operates on calculations of products between matrices and is therefore within a sequence permutation equivariant. This creates a problem as language and maybe even more so, time series, are order dependent. As a solution the authors of the original transformer, [Vaswani et al.](https://arxiv.org/abs/1706.03762) , use position encodings. 
 A position encoding provides positional information. The position is mapped to a vector of continuous numbers and is added to each element of the input sequence of the encoder and decoder before being processed by the attention mechanism. 
 
+
+## Position Encodings
+
 ![Absolute and Relative position biases](../assets/images/abs_vs_rel.png)
 
-
-Figure 3: Absolute and Relative position biases which in this example encode the position for a sequence of length three. z_i represents the ith element of the sequence as Query or Key and their dot-product defines the attention score a_ij . The Position Biases are added to each element z before the matrix multiplication is calculated and therefore affect the attention score. 
+The foregoing figure shows absolute and relative position biases which in this example encode the position for a sequence of length three. $$ z_i $$ represents the ith element of the sequence as Query or Key and their dot-product defines the attention score a_ij . The Position Biases are added to each element z before the matrix multiplication is calculated and therefore affect the attention score. 
 For the Absolute Position Bias, to each element their position in a sequence is added, therefore for example the attention score a_11 of the first element with itself includes the same position encoding twice, once in the Query and once in the Value representation.  
 In contrast, the Relative Position Bias encodes the relationships directly and includes the distance to other elements. Therefore, for example r_0 stays the same for each element’s attention score with itself. 
-Unlike in time series forecasting research, in NLP positional encodings are explored heavily (Dufter, Schmitt and Schütze, 2021). The research on positional information can be grouped in either absolute or relative encodings. The encodings of the original transformer are absolute and encode each position p from 1 to maximum sequence length into a d-dimensional vector. Hence, a mapping  f∶ N → R^d   is defined. In the original transformer paper by Vaswani et al. two different absolute encodings are investigated, an engineered fixed encoding with sinusoidal waves and one where the encoding is learned completely by the model itself. 
+The NLP research on positional information is mostly grouped in either absolute or relative encodings. The encodings of the original transformer are absolute and encode each position p from 1 to maximum sequence length into a d-dimensional vector. Hence, a mapping  f∶ N → R^d   is defined. In the original transformer paper by Vaswani et al. two different absolute encodings are investigated, an engineered fixed encoding with sinusoidal waves and one where the encoding is learned completely by the model itself. 
 
 ### Absolute Positional Encodings
 
