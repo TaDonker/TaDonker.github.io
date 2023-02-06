@@ -73,7 +73,7 @@ $$ {PE}_{(p,2j+1)}=cos{\left(\ \frac{p}{10000^\frac{2j}{d}}\right)}  $$
 
  (EQ6)a
  
-
+![Sinusoidal PE](../assets/images/SinPE.png)
  
 Figure 4: The absolute sinusoidal position encoding uses alternating values of sine and cosine. The wavelength is increasing with higher dimensions of the encoding and therefore avoids identical encodings for different positions even for long sequences. 
 To implement the sinusoidal encoding the 
@@ -136,12 +136,13 @@ Because for time series forecasting the sequence length is constant and fixed, t
 Temporal Embeddings
 Additionally in contrast to NLP with transformers, where a sequence generally starts with the beginning of a new sentence, for time series it may be useful to incorporate temporal information because a subset of the complete time series is randomly sampled and will have different start times (e.g. weekdays).
 This is usually done with embeddings. Each temporal feature (e.g. hour of the day, weekday, month, day of month, day of year…) will be encoded in its own lookup table. It is important to only include and encode a feature if it helps the forecast, as otherwise the dimensionality   unnecessarily increases and the model is more likely to overfit.
- 
+
+![TemporalEmbedding](../assets/images/TempEmb.png)
 Figure 9: The conventional positional encoding, which defines the order within a sequence, and a temporal embedding are combined. The temporal embedding models the weekday and the hour of the day of each element with learned embeddings and additionally a global timestamp, which defines the point in time on the whole dataset, is added.
 
 
 
- 
+![Comparison](../assets/images/PE_comp.png) 
 Figure 12: Median and best results of the 50%-Quantile forecast for the tested positional encodings. The relative positional encoding combined with the temporal embedding (Relative+Temp) performs best, followed by omitting conventional positional encodings and only using the temporal embedding (Temp_only). Combining a learned embedding with the temporal embedding (PosEmb+Temp) performs similar. With a slightly worse median but a larger variance is the sinusoidal encoding enriched with the temporal embedding (Sinus+Temp). The worst results are the learned embedding (PosEmbedding) and the fixed sinusoidal encoding (SinusPE) encodings with temporal information provided as covariates. 
 
 
