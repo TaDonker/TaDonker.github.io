@@ -116,27 +116,26 @@ Therefore, it is not clear which positional encoding should be used and it could
 
 ### Relative Positional Encodings
 
-The absolute encodings are independent of each other and the main goal is to distinguish different positions, while the relationships are not modelled (Wang et al., 2020). 
+The absolute encodings are independent of each other and the main goal is to distinguish different positions, while the relationships are not modelled. 
 On the other hand, relative positional encodings [(Shaw, Uszkoreit and Vaswani, 2018)](https://arxiv.org/abs/1803.02155) encode the relative distance between tokens and represent the pairwise relationships between the current position and other positions.
 Shaw et al. propose to incorporate relative positional information parameters on the Key as well as the Value level of the self-attention mechanism.
 To implement relative positional encodings, one has to introduce the pairwise relationships $$a_{ij}^V  , a_{ij}^K   ∈ R^d $$  between input elements $$x_i$$ and $$x_j$$ . 
-a_ij^V  , a_ij^K are edge information which represent the absolute distance between elements modified by learned weight parameters.
-To append relative positional information a_ij^V at the Value level Equation 3 is modified to:
+$$a_{ij}^V  , a_{ij}^K$$ are edge information which represent the absolute distance between elements modified by learned weight parameters.
+To append relative positional information $$a_{ij}^V$$ at the Value level is modified to:
 
 $$ z_i=\ \sum_{j=1}^{n}{a_{ij}(x_jW_V\ +\ a_{ij}^V)} $$
 
-(EQ7)
 
 
-And for the Key matrix the pairwise relationships a_ij^K  is added to Equation 5:
+And for the Key matrix the pairwise relationships $$a_{ij}^K$$  are added:
 
 
 $$ e_{ij}=\frac{(x_iW_Q)\ {(x_jW_K\ +\ a_{ij}^K)}^T}{\sqrt d} $$
 
-(EQ8)
 
-Therefore, in contrast to absolute positional encodings, the attention mechanism requires alteration and is repeatedly calculated in every layer. A resulting drawback is the memory complexity of O(L²). But the relative position encoding by (Shaw, Uszkoreit and Vaswani, 2018) was recently subject to more research and several improvements also in regard to efficiency were proposed (Huang et al., 2018, 2020; Chen, 2021; Luo et al., 2021). 
-But for this experiment the original relative positional encoding will be used. A nice implementation can be found [here](https://github.com/evelinehong/Transformer_Relative_Position_PyTorch/blob/master/relative_position.py) by Yining Hong  . She follows Shaws et al. proposition of an efficient implementation by splitting EQ8 into two terms.
+
+Therefore, in contrast to absolute positional encodings, the attention mechanism requires alteration and is repeatedly calculated in every layer. A resulting drawback is the memory complexity of O(L²). But the relative position encoding was recently subject to more research and several improvements also in regard to efficiency were proposed. 
+But for this experiment the original relative positional encoding will be used. A nice implementation can be found [here](https://github.com/evelinehong/Transformer_Relative_Position_PyTorch/blob/master/relative_position.py) by Yining Hong. She follows Shaws et al. proposition of an efficient implementation by splitting the calculation into two terms.
 
 
 
@@ -149,12 +148,13 @@ This is usually done with embeddings. Each temporal feature (e.g. hour of the da
 
 ![TemporalEmbedding](../assets/images/TempEmb.png)
 
-Figure 9: The conventional positional encoding, which defines the order within a sequence, and a temporal embedding are combined. The temporal embedding models the weekday and the hour of the day of each element with learned embeddings and additionally a global timestamp, which defines the point in time on the whole dataset, is added.
+The conventional positional encoding, which defines the order within a sequence, and a temporal embedding are combined. The temporal embedding models the weekday and the hour of the day of each element with learned embeddings and additionally a global timestamp, which defines the point in time on the whole dataset, is added.
 
 ---
+### Results
 
 ![Comparison](../assets/images/PE_comp.png) 
-Figure 12: Median and best results of the 50%-Quantile forecast for the tested positional encodings. The relative positional encoding combined with the temporal embedding (Relative+Temp) performs best, followed by omitting conventional positional encodings and only using the temporal embedding (Temp_only). Combining a learned embedding with the temporal embedding (PosEmb+Temp) performs similar. With a slightly worse median but a larger variance is the sinusoidal encoding enriched with the temporal embedding (Sinus+Temp). The worst results are the learned embedding (PosEmbedding) and the fixed sinusoidal encoding (SinusPE) encodings with temporal information provided as covariates. 
+Median and best results of the 50%-Quantile forecast for the tested positional encodings. The relative positional encoding combined with the temporal embedding (Relative+Temp) performs best, followed by omitting conventional positional encodings and only using the temporal embedding (Temp_only). Combining a learned embedding with the temporal embedding (PosEmb+Temp) performs similar. With a slightly worse median but a larger variance is the sinusoidal encoding enriched with the temporal embedding (Sinus+Temp). The worst results are the learned embedding (PosEmbedding) and the fixed sinusoidal encoding (SinusPE) encodings with temporal information provided as covariates. 
 
 
 
@@ -162,7 +162,7 @@ Figure 12: Median and best results of the 50%-Quantile forecast for the tested p
 ### Time Features as Covariates vs Temporal Embedding
 
 The temporal embedding appears to outperform traditional feature preparation. The median results and also the best runs of the absolute encodings without temporal enrichment are worse than all other positional encodings. The increase of computational complexity by learnable embeddings is a drawback but of small effect. Another disadvantage is, that the embeddings need to be designed deliberately and the design has to be tailored to the specific dataset, which comes with additional hyperparameter tuning. But for time series forecasting it is often the case that a model is continuously used and often it will make sense to find the right embedding to improve all future forecasts.
-Also, the effect if no time information at all is included was measured, and the decrease was significant (Table1: WithoutTime). Conclusively, time information is crucial for an accurate forecast and the best performing solution is a temporal embedding.
+Conclusively, time information is crucial for an accurate forecast and the best performing solution is a temporal embedding.
 
 ### Absolut Encoding: Learnable vs Fixed
 
@@ -170,7 +170,7 @@ The authors intuition was that the learnable positional embedding would be super
 
 ### Relative Position Encoding and Temporal Embeddings Only
 
-The best performing median results are for the relative encoding and the position encoding only depending on temporal embeddings. Which shows that a traditional absolute encoding is not needed and that the constructed temporal embedding can replace these encodings. This is contrary to (Cai et al., 2020) where they tested a very similar temporal encoding but reported a strong performance decrease. Their loss almost doubled, which is unlikely to have only one cause, but in this work better results are noticeable when combining the sinusoidal global timestamp with the weekday and hour embeddings with a linear layer, which in combination with the global encoding seems to produce a better representation. For example, in the presented traffic benchmark the input window is eight days long and therefore, when only hour and day are encoded, a position is not uniquely identifiable. The global timestamp makes each position unique and by combining global timestep, hour and time embedding with learned parameters, the model is able to produce a better representation. 
+The best performing median results are for the relative encoding and the position encoding only depending on temporal embeddings. Which shows that a traditional absolute encoding is not needed and that the constructed temporal embedding can replace these encodings. This is contrary to [Cai et al., 2020](https://par.nsf.gov/biblio/10191796) where they tested a very similar temporal encoding but reported a strong performance decrease. Their loss almost doubled, which is unlikely to have only one cause, but in this work better results are noticeable when combining the sinusoidal global timestamp with the weekday and hour embeddings with a linear layer, which in combination with the global encoding seems to produce a better representation. For example, in the presented traffic benchmark the input window is eight days long and therefore, when only hour and day are encoded, a position is not uniquely identifiable. The global timestamp makes each position unique and by combining global timestep, hour and time embedding with learned parameters, the model is able to produce a better representation. 
 The relative positional encoding produced the best results and seems promising for future research on time series forecasting. Because the relative embedding parameters are learned autonomously according to the characteristics of the data, it is suitable for time series. Relative positional encodings are based on the distance of the datapoints, but the importance can still be learned. This harmonizes well with time series forecasting with seasonalities, because there, the distance between periodicities is constant and the importance for such distant points is high. Admittedly, the additional improvement to temporal embeddings is only minimal and more experiments are needed.   
 In Conclusion, encoding time features into temporal embeddings seems to have the largest effect. Still, relative positional encodings, which are not very well researched for time series forecasting, performed slightly better than all other positional encodings.
 But the effect on forecasting accuracy is rather small and other model parameter like the loss function or data preparation had a larger impact on performance.
