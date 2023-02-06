@@ -36,7 +36,7 @@ Absolute Positional Encodings
 
 A common solution for an absolute position encoding is a learned embedding. The position of each element within the input sequence is modelled with a learned lookup table and produces the d-dimensional output. An advantage is that the resulting positional encoding is completely data-driven and is possibly able to learn more complex information rather than only about position (Wang and Chen, 2020), which could be especially useful for time series, if temporal information can be incorporated.
 
-An implementation with PyTorch is rather simple by using the built in [Embedding class](https://pytorch.org/docs/stable/generated/torch.nn.Embedding.html)
+An implementation with PyTorch is rather simple by using the built in [Embedding class](https://pytorch.org/docs/stable/generated/torch.nn.Embedding.html).
 The required hyperparameters are the sequence length, for time series also called window size, and the output dimension of each learned embedding vector, which regulates the expressiveness.
 
 {% highlight ruby %} class TransformerModel(nn.Module):
