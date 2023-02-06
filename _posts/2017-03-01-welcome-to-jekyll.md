@@ -11,18 +11,18 @@ categories: media
 
 
 In this article different positional encodings for a time series forecast will be compared. Two absolute positional encodings and a relative positional encoding will be explained and the effect on forecasting accuracy measured. Also, the combination of different encodings with an embedding of time features (temporal embedding) will be analysed.
-The experiments are conducted on a traffic dataset, which shows periodic patterns, and the transformer model proposed by  [Li et al., 2020](https://arxiv.org/abs/1907.00235) in “ Enhancing the Locality and Breaking the Memory Bottleneck of Transformer on Time Series Forecasting ” is used. More details can be found in my 
+The experiments are conducted on a traffic dataset, which shows periodic patterns. The for time series adapted transformer model proposed by  [Li et al., 2020](https://arxiv.org/abs/1907.00235) in “ Enhancing the Locality and Breaking the Memory Bottleneck of Transformer on Time Series Forecasting ” is used. More details can be found in my 
 [Bachelor Thesis](../assets/docs/Thesis_TarekDonker.pdf)
  
 >Results upfront:
->Using temporal embeddings resulted in a slight performance improvement on a traffic dataset. A relative positional encoding achieved the best results. Also, >the results showed, that it is possible to omit traditional positional encodings and only use temporal embeddings.
+>Using temporal embeddings resulted in a slight performance improvement on a traffic dataset. A relative positional >encoding achieved the best results. Also, the results showed, that it is possible to omit traditional positional >encodings and only use temporal embeddings.
 
 Transformers for time series forecasting are rising in research interest and achieve state-of-the-art results on many benchmarks. But while the supplementary research of transformers for Natural Language Processing is already built up, for time series forecasting it lacks behind.
 The positional encoding is an essential component of any transformer and is heavily researched for language tasks. Nevertheless, for time series forecasting with transformers comparative studies on positional encodings are scarce and the existing research is contradictory to used methods in recent models. 
 Therefore, the effects on performance of two commonly used absolute positional encodings and a relative positional encoding will be analysed.
 
-One of the main reasons in the original transformer, beside directly handling distant dependencies, to replace recurrent structures with self-attention is to be able to parallelize computation. Recurrent neural networks are inherently sequential, which impedes parallelization and becomes more critical for longer sequences. In contrast, self-attention operates on calculations of products between matrices and is therefore within a sequence permutation equivariant. This creates a problem as language and maybe even more so, time series, are order dependent. As a solution Vaswani et al. use position encodings. 
-A position encoding, first introduced in (Gehring et al., 2017), provides positional information. The position is mapped to a vector of continuous numbers and is added to each element of the input sequence of the encoder and decoder before being processed by the attention mechanism. 
+One of the main reasons to replace recurrent structures with self-attention in a transformer, beside directly handling distant dependencies, is to be able to parallelize computation. Recurrent neural networks are inherently sequential, which impedes parallelization and becomes more critical for longer sequences. In contrast, self-attention operates on calculations of products between matrices and is therefore within a sequence permutation equivariant. This creates a problem as language and maybe even more so, time series, are order dependent. As a solution the authors of the original transformer, [Vaswani et al.](https://arxiv.org/abs/1706.03762) , use position encodings. 
+A position encoding provides positional information. The position is mapped to a vector of continuous numbers and is added to each element of the input sequence of the encoder and decoder before being processed by the attention mechanism. 
 
 ![Absolute and Relative position biases](../assets/images/abs_vs_rel.png)
 
