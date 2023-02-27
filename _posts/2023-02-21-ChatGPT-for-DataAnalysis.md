@@ -14,6 +14,8 @@ hopefully in a timely manner. Additionally, you might not want to publish your e
 ChatGPT could solve these limitations if it is able to answer correctly. 
 
 
+### Data Generation and Inspection
+
 At the beginning of every new project a data scientist has to become acquainted with the data and bring it to a workable form. 
 This can be time consuming and theoretically an AI could much faster scan through the data to find anomalies and propose the suitable preprocessing steps.
 So let’s generate some data and test ChatGPT.
@@ -70,3 +72,11 @@ The description is impressive, as I did not give ChatGPT any additional informat
 
 
 In contrast, it is alarming that in spite of complete data for the Accident column it claims missing values. 
+
+
+### Missing Data
+
+The next step would be to handle the missing data:
+
+![Data Imputation](../assets/images/ChatGPT_2.png)
+
