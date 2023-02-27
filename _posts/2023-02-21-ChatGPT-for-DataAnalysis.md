@@ -40,6 +40,9 @@ So let’s generate some data and test ChatGPT.
 
 {% endhighlight %}
 
+
+I told ChatGPT to act as a data scientist, gave it 15 generated rows and asked to show the data as a table and what it can tell me about the data.
+
 |    | Date                | Category | Year | Model         | Cylinders | Accident | Score    |
 |---:|:--------------------|:---------|-----:|:--------------|----------:|:---------|:---------|
 |  0 | 2024-01-23 10:00:00 | Electric | 2023 | Mercedes-649  | nan       | yes      | 0.841197 |
@@ -58,3 +61,12 @@ So let’s generate some data and test ChatGPT.
 | 13 | 2023-03-08 04:00:00 | Electric | 2013 | BMW-923       | nan       | no       | 0.042386 |
 | 14 | 2024-01-18 09:00:00 | Gas      | 2023 | VW-519        |         6 | yes      | 0.292849 |
 
+
+![Infos about Data](../assets/images/ChatGPT_1.png)
+
+
+So far so good, ChatGPT correctly allocated each field of the data to the correct cell, even though the data is only separated by spaces. Interestingly, it outputs the Cylinders-column as integers although the inputs were floats.
+The description is impressive, as I did not give ChatGPT any additional information and it correctly recognized that the data is of vehicles and also that the values in the Cylinders column are missing for electric cars. 
+
+
+In contrast, it is alarming that in spite of complete data for the Accident column it claims missing values. 
