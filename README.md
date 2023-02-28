@@ -1,8 +1,3 @@
----
-title: "About"
-permalink: "/about/"
-layout: page
----
 
 ## Personal Github of Tarek Donker
 
